@@ -1,3 +1,4 @@
+use enemy::enemys;
 use sfml::{
     graphics::{
         RectangleShape, CircleShape, Color, ConvexShape, Font, RenderTarget, RenderWindow, Sprite, Text, Texture,
@@ -7,6 +8,8 @@ use sfml::{
     window::{Event, Key, Style},
 };
 
+mod enemy;
+
 fn main() {
     let mut window = RenderWindow::new(
         (1200, 800),
@@ -15,6 +18,8 @@ fn main() {
         &Default::default(),
     );
     window.set_vertical_sync_enabled(true);
+
+    enemy::enemys::start_enemy();
 
     // work with textures
     let mario_texture = Texture::from_file("resources-mario/Player.png").unwrap();
