@@ -21,6 +21,8 @@ struct Mario {
 }
 
 impl Mario {
+    const speed: f32 = 10.0;
+
     fn get_position(&self) -> Vector2f {
         Vector2f::new(self.position.x, self.position.y)
     }
@@ -119,8 +121,9 @@ fn main() {
                     code: Key::Right, ..
                 } => {
                     println!("Click to right key");
-                    position += 5.0;
-                    mario_sprite.set_position((position, mario_sprite.position().y));
+                    // position += 5.0;
+                    mario.position.x += Mario::speed;
+                    mario_sprite.set_position((mario.position.x, mario_sprite.position().y));
                     go_state.change();
                     println!("Go state {:?}", go_state);
                     match go_state {
@@ -136,15 +139,16 @@ fn main() {
                     code: Key::Left, ..
                 } => {
                     println!("Click to left key");
-                    position -= 5.0;
-                    mario_sprite.set_position((position, mario_sprite.position().y));
+                    // position -= 5.0;
+                    mario.position.x -= Mario::speed;
+                    mario_sprite.set_position((mario.position.x, mario_sprite.position().y));
                 }
                 Event::KeyPressed {
                     code: Key::Space, ..
                 } => {
                     println!("Click to Space`ship` key");
                     // here need to add acceleration
-                    if mario.position == flaw_position {
+                    if mario.position.y == flaw_position {
                         velocity = -100.0;    
                     }
                 }
@@ -153,8 +157,8 @@ fn main() {
         }
 
 
-        if mario.position >= flaw_position {
-            mario.position = flaw_position;
+        if mario.position.y >= flaw_position {
+            mario.position.y = flaw_position;
             // velocity = 0.0;
             // println!("Velocity 0.0");
             if velocity < 0.0 {
@@ -163,7 +167,7 @@ fn main() {
                 // let t_sec = duration as f32 / 1000.0;
                 let t_sec = 1.0 / 1000.0;
                 let path = t_sec * ( velocity + 9.81 * t_sec );
-                mario.position += path;
+                mario.position.y += path;
                 println!(
                     "Duration time {:?} velocity {} path {}",
                     duration, velocity, path
@@ -177,7 +181,7 @@ fn main() {
                 let t_sec = duration as f32 / 1000.0;
                 velocity = velocity + 9.81 * t_sec;
                 let path = velocity * t_sec;
-                mario.position += path;
+                mario.position.y += path;
                 println!(
                     "Duration time {:?} velocity {} path {}",
                     duration, velocity, path
@@ -186,20 +190,14 @@ fn main() {
             }
         }
 
-        window.draw(&circle);
         window.clear(Color::BLACK);
         window.draw(&mario_sprite);
-        // window.draw(&sprite);
-        // window.draw(&convex_shape);
-        // window.draw(&title);
-        // window.draw(&second_text);
-        // window.draw(&third_text);
         window.display();
     }
 }
 
 fn update(sprite: &mut Sprite, mario: &mut Mario) {
     // println!("Update {:?} {:?}!", sprite, mario);
-    // mario.position += 0.1;
-    sprite.set_position((sprite.position().x, mario.position.x));
+    // sprite.set_position((sprite.position().x, mario.position.y));
+    sprite.set_position((mario.position.x, mario.position.y));
 }
