@@ -21,7 +21,7 @@ struct Mario {
 }
 
 impl Mario {
-    const speed: f32 = 10.0;
+    const speed: f32 = 20.0;
 
     fn get_position(&self) -> Vector2f {
         Vector2f::new(self.position.x, self.position.y)
@@ -40,6 +40,12 @@ trait Drawn {
     fn draw(&mut self) {
         println!("Draw for drawn");
     }
+}
+
+#[derive(Debug)]
+enum FlyState {
+    Fly,
+    Ground,
 }
 
 #[derive(Debug)]
