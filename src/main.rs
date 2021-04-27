@@ -61,19 +61,6 @@ impl State {
     }
 }
 
-// fn change_txture(state: &mut State) {
-//     match state {
-//         Go1 => {
-//             println!("go first");
-//             *state = State::Go2;
-//         }
-//         Go2 => {
-//             println!("go second");
-//             *state = State::Go1;
-//         }
-//     }
-// }
-
 fn main() {
     let mut window = RenderWindow::new((1200, 800), "Mario", Style::DEFAULT, &Default::default());
     window.set_vertical_sync_enabled(true);
@@ -159,8 +146,6 @@ fn main() {
 
         if mario.position.y >= flaw_position {
             mario.position.y = flaw_position;
-            // velocity = 0.0;
-            // println!("Velocity 0.0");
             if velocity < 0.0 {
                 start = Instant::now();
                 duration = start.elapsed().as_millis();
@@ -169,7 +154,7 @@ fn main() {
                 let path = t_sec * ( velocity + 9.81 * t_sec );
                 mario.position.y += path;
                 println!(
-                    "Duration time {:?} velocity {} path {}",
+                    "Duration time y >= flaw {:?} velocity {} path {}",
                     duration, velocity, path
                 );
             }
@@ -183,8 +168,8 @@ fn main() {
                 let path = velocity * t_sec;
                 mario.position.y += path;
                 println!(
-                    "Duration time {:?} velocity {} path {}",
-                    duration, velocity, path
+                    "Duration time {:?} velocity {} path {} mario pos {:?}",
+                    duration, velocity, path, mario
                 );
                 update(&mut mario_sprite, &mut mario);
             }
